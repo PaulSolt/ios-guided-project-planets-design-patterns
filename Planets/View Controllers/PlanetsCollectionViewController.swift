@@ -13,9 +13,19 @@ class PlanetsCollectionViewController: UICollectionViewController, UIPopoverPres
     @IBAction func unwindToPlanetsCollectionViewController(_ sender: UIStoryboardSegue) {
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshViews(notification:)), name: .shouldShowPlutoChanged, object: nil)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         collectionView?.reloadData()
+    }
+    
+    @objc func refreshViews(notification: NSNotification) {
+         collectionView?.reloadData()
     }
     
     // MARK: UICollectionViewDataSource

@@ -8,6 +8,10 @@
 
 import UIKit
 
+extension NSNotification.Name {
+    static let shouldShowPlutoChanged = NSNotification.Name(rawValue: "shouldShowPlutoChanged")
+}
+
 class SettingsViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
@@ -15,9 +19,12 @@ class SettingsViewController: UIViewController {
         updateViews()
     }
     
+    // Target/Action for button action (Cocoa Design Pattern)
     @IBAction func changeShouldShowPluto(_ sender: UISwitch) {
         let userDefaults = UserDefaults.standard
         userDefaults.set(sender.isOn, forKey: .shouldShowPlutoKey)
+        
+        NotificationCenter.default.post(name: .shouldShowPlutoChanged, object: nil)
     }
     
     private func updateViews() {
